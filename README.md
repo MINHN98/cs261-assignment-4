@@ -23,7 +23,7 @@ Here are some specific notes on how the priority queue you'll implement should b
 
   * Your priority queue must be implemented using a heap as the underlying data structure.
 
-  * In the priority queue you implement *lower* priority values should correspond to elements with *higher* priority.  In other words, the first element in the priority queue should be the one with the *lowest* priority value among all elements in the collection.  For example, your priority queue should return an element with priority value 0 before it returns one with priority value 10.
+  * In the priority queue you implement, *lower* priority values should correspond to elements with *higher* priority.  In other words, the first element in the priority queue should be the one with the *lowest* priority value among all elements in the collection.  For example, your priority queue should return an element with priority value 0 before it returns one with priority value 10.
 
   * Your `pq_insert()` and `pq_remove_first()` functions should both be *O(log n)*, and your `pq_first()` and `pq_first_priority()` functions should both be *O(1)*.
 
