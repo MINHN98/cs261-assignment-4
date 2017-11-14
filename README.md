@@ -1,7 +1,7 @@
 # Assignment 4
 **Due by 11:59pm on Monday, 11/27/2017**
 
-**Demo due by 11:59pm on Friday 12/1/2017**
+**Demo due by 11:59pm on Friday 12/8/2017**
 
 In this assignment, you will implement a complete heap-based priority queue.  In addition to the description of your task below, there is thorough documentation in the file `pq.c` describing how each function you'll write should behave.
 
