@@ -73,6 +73,7 @@ int main(int argc, char** argv) {
     struct process* first = pq_first(pq);
     struct process* proc = pq_remove_first(pq);
     assert(first == proc);
+    //printf("here");
     printf("  - %5d (%d)\n", proc->pid, priority);
   }
 
