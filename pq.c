@@ -29,7 +29,7 @@ struct node{
   int prior;
 };
 
-
+//helper functions 
 void swap(struct pq* pq, int ind_1, int ind_2);
 void percolate_up(struct pq* pq, int curr_ind);
 void percolate_down(struct pq* pq, int curr_ind);
@@ -99,41 +99,29 @@ int pq_isempty(struct pq* pq) {
 void pq_insert(struct pq* pq, void* value, int priority) {
   assert(pq);
 
-  //printf("%d\n", priority);
+  //allocate memory for priority integer
+  int* p = malloc(sizeof(int));
+  *p = priority;
 
   //get last index where value will be added
   int last_ind = dynarray_size(pq->vals);
 
   //insert value and its priority to its respective arrays
   dynarray_insert(pq->vals, last_ind, value);
-  dynarray_insert(pq->prior, last_ind, &priority);
+  dynarray_insert(pq->prior, last_ind, p);
 
   //percolate from last index up. 
   percolate_up(pq, last_ind);
 
-  //int test_p = (*((int*) dynarray_get(pq->prior, last_ind)));
-  //printf("%d\n", test_p);
-  
-  //previous code
-  /*
-  int curr = size;
-  while(curr != 0){
-    int parent_ind = ((curr-1)/2);
-    int parent_prior = (*((int*) dynarray_get(pq->prior, parent_ind)));
-    printf("parent: %d\n ", parent_prior);
-    printf("parent ind: %d\n ", parent_ind);
-    int curr_prior = (*((int*) dynarray_get(pq->prior, curr)));
-    printf("curr: %d\n ", curr_prior);
-    printf("curr ind: %d\n ", curr);
-    if(parent_prior > curr_prior){
-      swap(pq, parent_ind, curr);
-    }
-    curr = parent_ind;
-  }
-  */
 }
 
+
+/*
+* This function will percolate a node at curr_ind up following the properties of a 
+* minimizing heap. 
+*/
 void percolate_up(struct pq* pq, int curr_ind){
+  assert(pq);
   if(curr_ind != 0){
     //get parent index
     int parent_ind = ((curr_ind-1)/2);
@@ -184,7 +172,6 @@ void* pq_first(struct pq* pq) {
 int pq_first_priority(struct pq* pq) {
   assert(pq);
   int p = *((int*) dynarray_get(pq->prior, 0));
-  //printf("Returning: %d\n", p);
   return p;
 }
 
@@ -214,22 +201,28 @@ void* pq_remove_first(struct pq* pq) {
   //swap root and last element in heap
   swap(pq, 0, last_ind);
 
+  //free memory that was allocated to hold priority int
+  free(dynarray_get(pq->prior, last_ind));
   // remove last element which is now the root
   dynarray_remove(pq->vals, last_ind);
   dynarray_remove(pq->prior, last_ind);
+
 
   //if the array is not empty, percolate down from root node
   if (dynarray_size(pq->vals) > 0){
     percolate_down(pq, 0);
   }
 
-  //printf("Size of vals array: %d\n", dynarray_size(pq->vals));
-  //printf("Size of prior array: %d\n", dynarray_size(pq->prior));
-
   return first_val;
 }
 
+
+/*
+* This function will percolate a node at curr_ind down following the properties of a 
+* minimizing heap. 
+*/
 void percolate_down(struct pq* pq, int curr_ind){
+  assert(pq);
   //index of right and left children of curr
   int left_c_ind = 2 * curr_ind + 1;
   int right_c_ind = 2 * curr_ind + 2;
@@ -267,8 +260,9 @@ void percolate_down(struct pq* pq, int curr_ind){
 }
 
 
+//This function swaps elements in index ind_1 and index ind_2
 void swap(struct pq* pq, int ind_1, int ind_2){
-  //printf("SWAPPING \n");
+  assert(pq);
   void* temp_val = dynarray_get(pq->vals, ind_1);
   void* temp_prior = dynarray_get(pq->prior, ind_1);
  
